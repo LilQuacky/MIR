@@ -75,11 +75,6 @@ export function Hero() {
           </a>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
-        <div className="w-px h-16 bg-gradient-to-b from-transparent via-stone to-transparent animate-pulse" />
-      </div>
     </section>
   )
 }
