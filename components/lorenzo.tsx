@@ -89,7 +89,7 @@ export function Lorenzo() {
             <img
               src={lorenzoImg.src}
               alt="Lorenzo Perrone"
-              className="w-full h-auto object-contain rounded-md shadow-sm transform-gpu transition-transform duration-500 hover:scale-105"
+              className="w-full h-auto object-contain rounded-md transform-gpu transition-transform duration-500 hover:scale-105"
             />
           </div>
 

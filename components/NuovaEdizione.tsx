@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import navigazioneImg from "@/public/navigazione.png"
+import navigazioneImg from "@/public/MIR venti26.png"
 
 const services = [
   {
