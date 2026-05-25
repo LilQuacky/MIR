@@ -1,0 +1,85 @@
+"use client"
+
+import { useEffect, useState } from "react"
+
+export function Hero() {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center px-6 lg:px-12 pt-20">
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-sand/30 to-background" />
+
+      <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
+        {/* Logo */}
+        <div
+          className={`mb-8 transition-all duration-1000 delay-300 ${
+            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+          }`}
+        >
+          <img
+            src="/MIR logo.png"
+            alt="Mediterraneo in Rosa Logo"
+            className="w-full max-w-[300px] sm:max-w-[400px] md:max-w-[500px] h-auto object-contain mx-auto mix-blend-multiply"
+          />
+        </div>
+
+        {/* Main Headline */}
+        <h1
+          className={`font-serif text-5xl md:text-7xl lg:text-8xl font-light leading-[1.1] tracking-tight text-pink-text mb-8 text-balance transition-all duration-1000 delay-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          Il raid in gommone
+          <span className="block text-pink-highlight">dalle donne per le donne</span>
+        </h1>
+
+        {/* Subheadline */}
+        <p
+          className={`text-lg md:text-xl text-black max-w-3xl mx-auto leading-relaxed mb-12 text-pretty transition-all duration-1000 delay-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          a favore di <strong className="text-pink-highlight font-medium">“Cuore Rosa”</strong>: il ventaglio di servizi gratuiti dedicati alle donne che affrontano una diagnosi oncologica, firmato <strong className="text-pink-highlight font-medium">Associazione Lorenzo Perrone</strong>.
+        </p>
+
+        {/* CTA */}
+        <div
+          className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-1000 delay-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <a
+            href="#edizione-2026"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-pink-text text-white font-medium text-sm tracking-widest uppercase hover:bg-pink-text/90 transition-all duration-500 rounded-full"
+          >
+            Scopri l'Edizione 2026
+            <svg
+              className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a
+            href="#contatti"
+            className="inline-flex items-center gap-2 px-8 py-4 text-sm tracking-widest uppercase font-bold text-black hover:text-pink-text transition-colors duration-500"
+          >
+            Contatti
+          </a>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
+        <div className="w-px h-16 bg-gradient-to-b from-transparent via-stone to-transparent animate-pulse" />
+      </div>
+    </section>
+  )
+}
