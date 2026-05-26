@@ -114,10 +114,6 @@ const services: Service[] = [
 export function Edizione2026() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const isDraggingRef = useRef(false)
-  const startXRef = useRef(0)
-  const startScrollLeftRef = useRef(0)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -136,31 +132,7 @@ export function Edizione2026() {
     return () => observer.disconnect()
   }, [])
 
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== "mouse" || event.button !== 0 || !carouselRef.current) return
-
-    isDraggingRef.current = true
-    startXRef.current = event.clientX
-    startScrollLeftRef.current = carouselRef.current.scrollLeft
-    carouselRef.current.setPointerCapture(event.pointerId)
-  }
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current || event.pointerType !== "mouse" || !carouselRef.current) return
-
-    event.preventDefault()
-    const deltaX = event.clientX - startXRef.current
-    carouselRef.current.scrollLeft = startScrollLeftRef.current - deltaX
-  }
-
-  const endDrag = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== "mouse") return
-
-    isDraggingRef.current = false
-    if (carouselRef.current?.hasPointerCapture(event.pointerId)) {
-      carouselRef.current.releasePointerCapture(event.pointerId)
-    }
-  }
+  // vertical layout: no horizontal drag handlers needed
 
   return (
     <section ref={sectionRef} id="edizione-2026" className="py-32 lg:py-40 px-6 lg:px-12 bg-sand/50">
@@ -198,50 +170,37 @@ export function Edizione2026() {
 
         {/* Services Grid */}
         <div className="relative -mx-6 px-6 lg:-mx-12 lg:px-12">
-          <div className="mb-4 flex items-center justify-end text-xs uppercase tracking-[0.28em] text-muted-foreground/70">
-            Scorri orizzontalmente
-          </div>
-          <div
-            ref={carouselRef}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-            onPointerLeave={endDrag}
-            className="overflow-x-auto pb-6 snap-x snap-proximity scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing select-none"
-          >
-            <div className="flex w-max gap-8 lg:gap-10 items-stretch py-1">
-              {services.map((service, index) => (
-                <div
-                  key={service.title}
-                  className={`group h-[52rem] w-[calc(100vw-3rem)] flex-shrink-0 snap-start overflow-hidden rounded-[2rem] border border-border/60 bg-background shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:scale-[1.015] active:scale-[1.02] hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] touch-manipulation md:w-[38rem] lg:w-[40rem] xl:w-[42rem] ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                  }`}
-                  style={{ transitionDelay: `${300 + index * 150}ms` }}
-                >
-                  <div className="flex h-full min-h-0 flex-col items-center bg-gradient-to-b from-white via-background to-sand/20 p-8 text-center lg:p-10">
-                    <h3 className="flex h-24 items-center justify-center text-center font-serif text-2xl md:text-3xl text-foreground">
-                      {service.title}
-                    </h3>
-                    <div className="my-6 flex h-12 items-center justify-center text-pink-text">
-                      {service.icon}
-                    </div>
-                    <div className="mb-6 h-64 w-full overflow-hidden rounded-2xl border border-border/50 bg-sand/30 shadow-sm">
-                      <Image
-                        src={service.image}
-                        alt={service.imageAlt}
-                        className="h-full w-full object-cover"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                      />
-                    </div>
-                    <div className="w-full max-w-prose flex-1 min-h-0 overflow-y-auto pr-2 text-left text-muted-foreground leading-relaxed font-sans text-base scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
-                      <div className="space-y-4">{service.description}</div>
-                    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+            {services.map((service, index) => (
+              <div
+                key={service.title}
+                className={`group w-full max-w-4xl mx-auto overflow-hidden rounded-[2rem] border border-border/60 bg-background shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] p-6 lg:p-10 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+                style={{ transitionDelay: `${300 + index * 120}ms` }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <h3 className="text-center font-serif text-2xl md:text-3xl text-foreground mb-4">
+                    {service.title}
+                  </h3>
+                  <div className="my-4 flex h-12 items-center justify-center text-pink-text">
+                    {service.icon}
+                  </div>
+                  <div className="mb-6 w-full overflow-hidden rounded-2xl border border-border/50 bg-sand/30 shadow-sm">
+                    <Image
+                      src={service.image}
+                      alt={service.imageAlt}
+                      className="h-64 w-full object-cover md:h-72 lg:h-80"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <div className="w-full max-w-prose text-left text-muted-foreground leading-relaxed font-sans text-base">
+                    <div className="space-y-4">{service.description}</div>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
             </div>
-          </div>
         </div>
       </div>
     </section>
