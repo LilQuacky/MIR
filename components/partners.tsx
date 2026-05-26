@@ -8,6 +8,9 @@ import logoAlp from "@/public/logos/Logo_ALP.png"
 export function Partners() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  
+  const [activeCard, setActiveCard] = useState<number | null>(null)
+  const cardsRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -19,11 +22,28 @@ export function Partners() {
       { threshold: 0.1 },
     )
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current)
 
-    return () => observer.disconnect()
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = cardsRefs.current.indexOf(entry.target as HTMLAnchorElement)
+            if (index !== -1) setActiveCard(index)
+          }
+        })
+      },
+      { threshold: 0.6 }
+    )
+
+    cardsRefs.current.forEach((card) => {
+      if (card) cardObserver.observe(card)
+    })
+
+    return () => {
+      observer.disconnect()
+      cardObserver.disconnect()
+    }
   }, [])
 
   const partnersList = [
@@ -62,35 +82,41 @@ export function Partners() {
         <span className="italic"> grazie</span> a
       </h2>
         <div className="grid md:grid-cols-3 gap-8">
-          {partnersList.map((partner, index) => (
-            <a
-              key={index}
-              href={partner.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group flex flex-col items-center bg-background rounded-3xl p-8 lg:p-10 border border-border shadow-sm hover:shadow-xl transition-all duration-500 hover:scale-105 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: `${200 + index * 150}ms` }}
-            >
-              <p className="text-xs tracking-widest uppercase text-pink-text mb-8">
-                {partner.title}
-              </p>
-              <div className="h-28 flex items-center justify-center mb-8">
-                <img 
-                  src={partner.logo} 
-                  alt={partner.desc} 
-                  className="max-h-full max-w-full object-contain filter grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all duration-700 transform group-hover:scale-105"
-                />
-              </div>
-              <h4 className="font-serif text-xl mb-4 text-center transition-colors duration-500 group-hover:text-pink-highlight">
-                {partner.desc}
-              </h4>
-              <p className="text-sm text-center text-muted-foreground leading-relaxed">
-                {partner.focus}
-              </p>
-            </a>
-          ))}
+          {partnersList.map((partner, index) => {
+            const isActive = activeCard === index;
+            return (
+              <a
+                key={index}
+                ref={(el) => {
+                  cardsRefs.current[index] = el
+                }}
+                href={partner.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group flex flex-col items-center bg-background rounded-3xl p-8 lg:p-10 border border-border shadow-sm hover:shadow-xl active:scale-95 active:shadow-inner transition-all duration-500 hover:scale-105 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                } ${isActive ? "md:scale-100 scale-105" : ""}`}
+                style={{ transitionDelay: `${200 + index * 150}ms` }}
+              >
+                <p className="text-xs tracking-widest uppercase text-pink-text mb-8">
+                  {partner.title}
+                </p>
+                <div className="h-28 flex items-center justify-center mb-8">
+                  <img 
+                    src={partner.logo} 
+                    alt={partner.desc} 
+                    className={`max-h-full max-w-full object-contain filter group-hover:grayscale-0 group-active:grayscale-0 group-hover:opacity-100 group-active:opacity-100 transition-all duration-700 transform group-hover:scale-105 group-active:scale-105 ${isActive ? "grayscale-0 opacity-100 scale-105" : "grayscale opacity-70"}`}
+                  />
+                </div>
+                <h4 className={`font-serif text-xl mb-4 text-center transition-colors duration-500 group-hover:text-pink-highlight group-active:text-pink-highlight ${isActive ? "text-pink-highlight" : ""}`}>
+                  {partner.desc}
+                </h4>
+                <p className="text-sm text-center text-muted-foreground leading-relaxed">
+                  {partner.focus}
+                </p>
+              </a>
+            )
+          })}
         </div>
       </div>
     </section>
