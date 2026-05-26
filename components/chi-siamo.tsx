@@ -3,14 +3,33 @@
 import { useEffect, useRef, useState } from "react"
 import OptionsSelector from "./options-selector"
 import mir2022 from "@/public/mir/2022/mir2022.png"
-import mir2022_2 from "@/public/mir/2022/mir2022-2.png"
+import mir2022_2 from "@/public/mir/2022/navigazione.png"
+import mir2022_3 from "@/public/mir/2022/macchina.png"
 import mir2024 from "@/public/mir/2024/mir2024.png"
 import mir2024_2 from "@/public/mir/2024/mir2024-2.png"
 import mir2024_3 from "@/public/mir/2024/mir2024-3.png"
+import mir2024_4 from "@/public/mir/2024/Patrizia Maiorca2.png"
 import donne1 from "@/public/donne_allo-specchio/Donne allo specchio.png"
 import donne2 from "@/public/donne_allo-specchio/Donne allo specchio 2.png"
 
-const steps = [
+type CarouselImage = {
+  src: string
+  caption?: string
+}
+
+type Subsection = {
+  title: string
+  description: React.ReactNode
+  images?: CarouselImage[]
+}
+
+type Step = {
+  number: string
+  title: string
+  subsections: Subsection[]
+}
+
+const steps: Step[] = [
   {
     number: "2022",
     title: "La Prima Edizione",
@@ -22,7 +41,11 @@ const steps = [
             Settembre: parte la prima edizione. Da Amantea a Genova, con arrivo durante il <span className="font-bold italic text-pink-highlight">Salone Nautico Internazionale</span>, a bordo di un Prince 22.
           </>
         ),
-        images: [mir2022.src, mir2022_2.src]
+        images: [
+          { src: mir2022.src, caption: "L'equipaggio della prima edizione" },
+          { src: mir2022_2.src, caption: "Navigazione" },
+          { src: mir2022_3.src, caption: "Iniziativa Cuore Rosa" },
+        ]
       },
       {
         title: "Il Risultato Solidale",
@@ -45,16 +68,24 @@ const steps = [
             Settembre: il raid al femminile torna con una nuova edizione più ambiziosa. Da Catania a Genova, a bordo di un Prince 24 exclusive con arrivo ancora una volta durante il <span className="font-bold italic text-pink-highlight">Salone Nautico Internazionale</span>. Patrizia Maiorca è la madrina dell&apos;avventura al femminile e presidia la partenza a Catania. Il raid porta a bordo donne che hanno affrontato una malattia oncologica, per diffondere il fondamentale messaggio di <span className="font-bold italic text-pink-highlight">prevenzione</span>, oltre a coraggio e vicinanza alle donne che si trovano in quella stessa tempesta.
           </>
         ),
-        images: [mir2024.src, mir2024_2.src, mir2024_3.src]
+        images: [
+          { src: mir2024_4.src, caption: "Patrizia Maiorca, madrina del raid" },
+          { src: mir2024.src, caption: "L'equipaggio della seconda edizione" },
+          { src: mir2024_2.src, caption: "L'equipaggio della seconda edizione" },
+          { src: mir2024_3.src, caption: "L'equipaggio della seconda edizione" },
+        ]
       },
       {
         title: "Impatto e Solidarietà",
         description: (
           <>
             Al Teatro del Mare del Salone Nautico Internazionale di Genova viene presentata e celebrata l&apos;avventura al femminile. L&apos;impatto mediatico e solidale dentro e fuori dal mondo nautico è sorprendente. <span className="font-bold italic text-pink-highlight">46.500 € raccolti e donati</span>. L&apos;ALP organizza grazie ai fondi ricevuti dal raid “Donne allo specchio”, due corsi di make-up gratuiti dedicati a donne che hanno affrontato un tumore, oltre a portare avanti tutti gli altri servizi.
-          </>
+          </> 
         ),
-        images: [donne1.src, donne2.src]
+        images: [
+          { src: donne1.src, caption: "Il progetto Donne allo Specchio" },
+          { src: donne2.src, caption: "Il progetto Donne allo Specchio" },
+        ]
       }
     ]
   }
@@ -137,7 +168,6 @@ export function ChiSiamo() {
                               <h4 className="font-medium text-lg text-foreground">{sub.title}</h4>
                               <p className="text-muted-foreground leading-relaxed max-w-xl">{sub.description}</p>
                             </div>
-                            {/* @ts-ignore */}
                             {sub.images && (
                               <div
                                 className={`mt-6 transition-all duration-1000 ${
@@ -145,7 +175,7 @@ export function ChiSiamo() {
                                 }`}
                                 style={{ transitionDelay: `${500 + index * 150}ms` }}
                               >
-                                <OptionsSelector images={sub.images as string[]} />
+                                <OptionsSelector images={sub.images} />
                               </div>
                             )}
                           </div>

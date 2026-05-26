@@ -7,6 +7,7 @@ import { ChiSiamo } from "@/components/chi-siamo"
 import { Lorenzo } from "@/components/lorenzo"
 import { Contatti } from "@/components/contatti"
 import { Footer } from "@/components/footer"
+import { Ringraziamenti } from "@/components/ringraziamenti"
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <Alp />
         <Lorenzo />
         <Contatti />
+        <Ringraziamenti />
         <Footer />
     </main>
   )

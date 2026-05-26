@@ -50,21 +50,21 @@ export function Partners() {
     {
       title: "Ideato da",
       desc: "Nuova Jolly Marine",
-      focus: "Hanno ideato e lanciato questa avventura nautica al femminile, mettendoci letteralmente... la barca e il cuore.",
+      focus: "Ideatori e organizzatori di questa avventura nautica al femminile che naviga a bordo delle loro imbarcazioni, sicure e affidabili.",
       url: "https://www.nuovajollymarine.com/",
       logo: logoNJ.src
     },
     {
       title: "In collaborazione con",
       desc: "Honda Marine",
-      focus: "Fornisce prezioso supporto tecnico e logistico, spingendo la nostra imbarcazione fidata tra le onde.",
+      focus: "Il motore dell’iniziativa benefica. Una collaborazione che tiene il raid in moto, con supporto organizzativo e tecnico.",
       url: "https://www.honda.it/marine.html",
       logo: logoHonda.src
     },
     {
       title: "A sostegno di",
       desc: "Associazione Lorenzo Perrone",
-      focus: "Trasformiamo le miglia percorse in fondi concreti per la prevenzione e i servizi gratuiti per le donne.",
+      focus: "Le miglia percorse diventano fondi concreti per sostenere i servizi gratuiti dedicati alle donne malate di tumore e le attività di prevenzione.",
       url: "https://www.associazionelorenzoperrone.org/",
       logo: logoAlp.src
     }

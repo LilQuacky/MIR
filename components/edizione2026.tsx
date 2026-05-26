@@ -1,25 +1,22 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import OptionsSelector from "./options-selector"
-import navigazioneImg from "@/public/mir/2026/mir2026.png"
-import mir2026_2 from "@/public/mir/2026/mir2026-2.png"
-import mir2026_3 from "@/public/mir/2026/mir2026-3.png"
+import Image, { type StaticImageData } from "next/image"
+import logo2026 from "@/public/mir/2026/Logo MIR venti26.png"
+import boxPartenza from "@/public/mir/2026/box-partenza.png"
+import boxTappe from "@/public/mir/2026/box-tappe.png"
+import boxPrevenzione from "@/public/mir/2026/box-prevenzione.png"
+import boxObiettivi from "@/public/mir/2026/box-obiettivi.png"
 
-function Galleria({ isVisible }: { isVisible: boolean }) {
-  return (
-    <div
-      className={`mt-16 max-w-5xl mx-auto transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-      }`}
-      style={{ transitionDelay: `600ms` }}
-    >
-      <OptionsSelector images={[navigazioneImg.src, mir2026_2.src, mir2026_3.src]} />
-    </div>
-  )
+type Service = {
+  title: string
+  description: React.ReactNode
+  icon: React.ReactNode
+  image: StaticImageData
+  imageAlt: string
 }
 
-const services = [
+const services: Service[] = [
   {
     title: "Un sogno che diventa Giro d'Italia",
     description: (
@@ -32,13 +29,15 @@ const services = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
       </svg>
     ),
+    image: boxPartenza,
+    imageAlt: "Box partenza 2026",
   },
   {
     title: "L'itinerario a tappe",
     description: (
       <div className="grid md:grid-cols-2 gap-6 mt-4">
         <div>
-          <p className="text-sm font-medium mb-3">
+          <p className="font-medium text-foreground">
             Parte I
           </p>
           <ul className="text-sm space-y-1.5 marker:text-pink-highlight list-inside">
@@ -52,7 +51,7 @@ const services = [
           </ul>
         </div>
         <div>
-          <p className="text-sm font-medium mb-3">
+          <p  className="font-medium text-foreground">
             Parte II
           </p>
           <ul className="text-sm space-y-1.5 marker:text-pink-highlight list-inside">
@@ -74,6 +73,8 @@ const services = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
+    image: boxTappe,
+    imageAlt: "Box tappe 2026",
   },
   {
     title: "L'impegno per la prevenzione",
@@ -87,11 +88,13 @@ const services = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
       </svg>
     ),
+    image: boxPrevenzione,
+    imageAlt: "Box prevenzione 2026",
   },
   {
     title: "Gli obiettivi",
     description: (
-      <ul className="text-sm space-y-3 list-disc pl-4 marker:text-pink-highlight">
+      <ul className="space-y-3 list-disc pl-4 marker:text-pink-highlight">
         <li><span className="font-medium text-foreground">Raccogliere fondi</span> per sostenere i servizi e le attività gratuite dell'Associazione Lorenzo Perrone ETS;</li>
         <li><span className="font-medium text-foreground">Promuovere la tutela della salute</span> con momenti di prevenzione e sensibilizzazione;</li>
         <li><span className="font-medium text-foreground">Portare forza</span> a tutte le donne che affrontano un momento così difficile, con un messaggio di vicinanza;</li>
@@ -103,12 +106,18 @@ const services = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zm-7.518-.267A8.25 8.25 0 1120.25 10.5M8.288 14.212A5.25 5.25 0 1117.25 10.5" />
       </svg>
     ),
+    image: boxObiettivi,
+    imageAlt: "Box obiettivi 2026",
   },
 ]
 
 export function Edizione2026() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const isDraggingRef = useRef(false)
+  const startXRef = useRef(0)
+  const startScrollLeftRef = useRef(0)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -127,11 +136,50 @@ export function Edizione2026() {
     return () => observer.disconnect()
   }, [])
 
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || event.button !== 0 || !carouselRef.current) return
+
+    isDraggingRef.current = true
+    startXRef.current = event.clientX
+    startScrollLeftRef.current = carouselRef.current.scrollLeft
+    carouselRef.current.setPointerCapture(event.pointerId)
+  }
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current || event.pointerType !== "mouse" || !carouselRef.current) return
+
+    event.preventDefault()
+    const deltaX = event.clientX - startXRef.current
+    carouselRef.current.scrollLeft = startScrollLeftRef.current - deltaX
+  }
+
+  const endDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse") return
+
+    isDraggingRef.current = false
+    if (carouselRef.current?.hasPointerCapture(event.pointerId)) {
+      carouselRef.current.releasePointerCapture(event.pointerId)
+    }
+  }
+
   return (
     <section ref={sectionRef} id="edizione-2026" className="py-32 lg:py-40 px-6 lg:px-12 bg-sand/50">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-20 flex flex-col items-center">
+          <div
+            className={`mb-8 transition-all duration-1000 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+            style={{ transitionDelay: `120ms` }}
+          >
+            <Image
+              src={logo2026}
+              alt="Logo MIR 2026"
+              className="h-auto w-[500px] md:w-[700px] lg:w-[800px]"
+              priority
+            />
+          </div>
           <p
             className={`text-xs tracking-[0.3em] uppercase text-pink-text mb-6 transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -149,25 +197,52 @@ export function Edizione2026() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-px bg-border">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className={`group bg-background p-10 lg:p-14 transition-all duration-1000 hover:bg-card ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: `${300 + index * 150}ms` }}
-            >
-              <div className="text-pink-text mb-6 transition-transform duration-500 group-hover:scale-110">
-                {service.icon}
-              </div>
-              <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-4">{service.title}</h3>
-              <div className="text-muted-foreground leading-relaxed">{service.description}</div>
+        <div className="relative -mx-6 px-6 lg:-mx-12 lg:px-12">
+          <div className="mb-4 flex items-center justify-end text-xs uppercase tracking-[0.28em] text-muted-foreground/70">
+            Scorri orizzontalmente
+          </div>
+          <div
+            ref={carouselRef}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onPointerLeave={endDrag}
+            className="overflow-x-auto pb-6 snap-x snap-proximity scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing select-none"
+          >
+            <div className="flex w-max gap-8 lg:gap-10 items-stretch py-1">
+              {services.map((service, index) => (
+                <div
+                  key={service.title}
+                  className={`group h-[52rem] w-[calc(100vw-3rem)] flex-shrink-0 snap-start overflow-hidden rounded-[2rem] border border-border/60 bg-background shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:scale-[1.015] active:scale-[1.02] hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] touch-manipulation md:w-[38rem] lg:w-[40rem] xl:w-[42rem] ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                  }`}
+                  style={{ transitionDelay: `${300 + index * 150}ms` }}
+                >
+                  <div className="flex h-full min-h-0 flex-col items-center bg-gradient-to-b from-white via-background to-sand/20 p-8 text-center lg:p-10">
+                    <h3 className="flex h-24 items-center justify-center text-center font-serif text-2xl md:text-3xl text-foreground">
+                      {service.title}
+                    </h3>
+                    <div className="my-6 flex h-12 items-center justify-center text-pink-text">
+                      {service.icon}
+                    </div>
+                    <div className="mb-6 h-64 w-full overflow-hidden rounded-2xl border border-border/50 bg-sand/30 shadow-sm">
+                      <Image
+                        src={service.image}
+                        alt={service.imageAlt}
+                        className="h-full w-full object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+                    <div className="w-full max-w-prose flex-1 min-h-0 overflow-y-auto pr-2 text-left text-muted-foreground leading-relaxed font-sans text-base scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                      <div className="space-y-4">{service.description}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-
-        <Galleria isVisible={isVisible} />
       </div>
     </section>
   )
