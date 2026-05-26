@@ -14,7 +14,7 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({ images }) => {
   if (!images || images.length === 0) return null
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-[350px] lg:h-[450px] gap-3">
+    <div className="flex flex-row w-full h-[350px] lg:h-[450px] gap-2 lg:gap-3">
       {images.map((imgSrc, index) => (
         <div
           key={index}
@@ -22,7 +22,7 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({ images }) => {
           className={cn(
             "group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-700 ease-[cubic-bezier(0.05,0.61,0.41,0.95)] shadow-sm",
             activeOption === index 
-              ? "flex-[4] shadow-md" 
+              ? "flex-[4] shadow-md saturate-100" 
               : "flex-[1] saturate-50 hover:saturate-100 hover:flex-[1.2]"
           )}
         >
