@@ -51,16 +51,6 @@ export function Footer() {
               </a>
             </nav>
           </div>
-
-          {/* Partner & Sostenitori */}
-          <div className="md:col-span-2">
-            <p className="text-xs tracking-widest uppercase text-muted-foreground mb-4">Partner</p>
-            <div className="flex flex-col gap-3">
-              <p className="text-xs text-muted-foreground">Ideato da <br/><a href="https://www.nuovajollymarine.com/" target="_blank" rel="noopener noreferrer" className="text-sm text-foreground font-medium hover:text-pink-text transition-colors">Nuova Jolly Marine</a></p>
-              <p className="text-xs text-muted-foreground">In collaborazione con <br/><a href="https://www.honda.it/marine.html" target="_blank" rel="noopener noreferrer" className="text-sm text-foreground font-medium hover:text-pink-text transition-colors">Honda Marine</a></p>
-              <p className="text-xs text-muted-foreground">A sostegno di <br/><a href="https://www.associazionelorenzoperrone.org/" target="_blank" rel="noopener noreferrer" className="text-sm text-foreground font-medium hover:text-pink-text transition-colors">Associazione Lorenzo Perrone</a></p>
-            </div>
-          </div>
         </div>
 
         {/* Bottom Bar */}

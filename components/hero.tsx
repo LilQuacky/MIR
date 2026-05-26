@@ -22,7 +22,7 @@ export function Hero() {
           }`}
         >
           <img
-            src="/MIR logo.png"
+            src="/logos/MIR%20logo.png"
             alt="Mediterraneo in Rosa Logo"
             className="w-full max-w-[300px] sm:max-w-[400px] md:max-w-[500px] h-auto object-contain mx-auto mix-blend-multiply"
           />
