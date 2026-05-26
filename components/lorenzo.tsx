@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import lorenzoImg from "@/public/lorenzo.png"
+import lorenzoImg from "@/public/alp/alp5.png"
 
 export function Lorenzo() {
   const [isVisible, setIsVisible] = useState(false)
