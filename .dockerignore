@@ -1,0 +1,12 @@
+.git
+.next
+node_modules
+.turbo
+coverage
+.DS_Store
+*.log
+Dockerfile
+docker-compose*.yml
+README.md
+pnpm-debug.log*
+.vscode
