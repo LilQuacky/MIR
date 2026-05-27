@@ -3,26 +3,25 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Japandi color palette - warm naturals with muted accents */
 :root {
-  --background: oklch(0.965 0.022 92);
+  --background: oklch(1 0 0);
   --foreground: oklch(0.25 0.02 60);
-  --card: oklch(0.978 0.018 91);
+  --card: oklch(1 0 0);
   --card-foreground: oklch(0.25 0.02 60);
-  --popover: oklch(0.978 0.018 91);
+  --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.25 0.02 60);
   --primary: var(--pink-text);
   --primary-foreground: oklch(0.98 0.005 80);
-  --secondary: oklch(0.92 0.02 80);
+  --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.25 0.02 60);
-  --muted: oklch(0.9 0.02 80);
+  --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.45 0.02 60);
   --accent: var(--pink-highlight);
   --accent-foreground: oklch(0.98 0.005 80);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.88 0.02 80);
-  --input: oklch(0.88 0.02 80);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
   --ring: oklch(0.35 0.06 150);
   --chart-1: oklch(0.35 0.06 150);
   --chart-2: oklch(0.65 0.12 45);
@@ -30,13 +29,13 @@
   --chart-4: oklch(0.7 0.1 120);
   --chart-5: oklch(0.6 0.08 30);
   --radius: 0.25rem;
-  --sidebar: oklch(0.965 0.022 92);
+  --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.25 0.02 60);
   --sidebar-primary: oklch(0.35 0.06 150);
   --sidebar-primary-foreground: oklch(0.98 0.005 80);
-  --sidebar-accent: oklch(0.92 0.02 80);
+  --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.25 0.02 60);
-  --sidebar-border: oklch(0.88 0.02 80);
+  --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.35 0.06 150);
 
   /* Custom Japandi tokens */
