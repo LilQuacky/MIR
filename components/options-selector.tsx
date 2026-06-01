@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 interface OptionsSelectorProps {
@@ -30,9 +31,10 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({ images }) => {
                 : "flex-[1] saturate-50 hover:saturate-100 hover:flex-[1.2]"
             )}
           >
-            <img 
+            <Image 
               src={imgSrc} 
-              alt={`Gallery image ${index + 1}`}
+              alt={caption ? `${caption} - Raid gommone Mediterraneo in Rosa` : `Immagine evento Mediterraneo in Rosa ${index + 1}`}
+              fill
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
             />
             <div className={cn(

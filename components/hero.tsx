@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Image from "next/image"
 
 export function Hero() {
   const [isVisible, setIsVisible] = useState(false)
@@ -25,9 +26,12 @@ export function Hero() {
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
           }`}
         >
-          <img
+          <Image
             src="/logos/MIR%20logo.png"
-            alt="Mediterraneo in Rosa Logo"
+            alt="Logo evento Mediterraneo in Rosa raid gommone donne"
+            width={500}
+            height={150}
+            priority
             className="w-full max-w-[300px] sm:max-w-[400px] md:max-w-[500px] h-auto object-contain mx-auto mix-blend-multiply"
           />
         </div>
