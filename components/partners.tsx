@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
+import { useIsMobile } from "@/hooks/use-mobile"
 import logoNJ from "@/public/logos/Logo Nuova Jolly Marine .png"
 import logoHonda from "@/public/logos/Logo Honda .png"
 import logoAlp from "@/public/logos/Logo_ALP.png"
@@ -8,6 +10,7 @@ import logoAlp from "@/public/logos/Logo_ALP.png"
 export function Partners() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  const isMobile = useIsMobile()
   
   const [activeCard, setActiveCard] = useState<number | null>(null)
   const cardsRefs = useRef<(HTMLAnchorElement | null)[]>([])
@@ -83,7 +86,7 @@ export function Partners() {
       </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {partnersList.map((partner, index) => {
-            const isActive = activeCard === index;
+            const isActive = isMobile ? activeCard === index : false;
             return (
               <a
                 key={index}
@@ -101,11 +104,13 @@ export function Partners() {
                 <p className="text-xs tracking-widest uppercase text-pink-text mb-8">
                   {partner.title}
                 </p>
-                <div className="h-28 flex items-center justify-center mb-8">
-                  <img 
+                <div className="h-28 flex items-center justify-center mb-8 relative w-full">
+                  <Image 
                     src={partner.logo} 
-                    alt={partner.desc} 
-                    className={`max-h-full max-w-full object-contain filter group-hover:grayscale-0 group-active:grayscale-0 group-hover:opacity-100 group-active:opacity-100 transition-all duration-700 transform group-hover:scale-105 group-active:scale-105 ${isActive ? "grayscale-0 opacity-100 scale-105" : "grayscale opacity-70"}`}
+                    alt={`Partner ${partner.title} - ${partner.desc}`} 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className={`object-contain filter group-hover:grayscale-0 group-active:grayscale-0 group-hover:opacity-100 group-active:opacity-100 transition-all duration-700 transform group-hover:scale-105 group-active:scale-105 ${isActive ? "grayscale-0 opacity-100 scale-105" : "grayscale opacity-70"}`}
                   />
                 </div>
                 <h4 className={`font-serif text-xl mb-4 text-center transition-colors duration-500 group-hover:text-pink-highlight group-active:text-pink-highlight ${isActive ? "text-pink-highlight" : ""}`}>

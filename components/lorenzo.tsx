@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
 import lorenzoImg from "@/public/alp/lorenzo.png"
 
 export function Lorenzo() {
@@ -86,9 +87,10 @@ export function Lorenzo() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
-            <img
-              src={lorenzoImg.src}
-              alt="Lorenzo Perrone"
+            <Image
+              src={lorenzoImg}
+              alt="Immagine di Lorenzo Perrone - Associazione Lorenzo Perrone"
+              placeholder="blur"
               className="w-full h-auto object-contain rounded-md transform-gpu transition-transform duration-500 hover:scale-105"
             />
           </div>

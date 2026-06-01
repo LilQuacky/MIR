@@ -51,9 +51,15 @@ const neueMontreal = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "Mediterraneo in Rosa",
-  description: "Il raid in gommone dalle donne per le donne",
-    generator: 'v0.app'
+  title: "Mediterraneo in Rosa | Raid Solidale in Gommone per le Donne",
+  description: "Scopri Mediterraneo in Rosa, il raid in gommone dalle donne per le donne. Progetto a sostegno dell'Associazione Lorenzo Perrone per aiutare le donne con diagnosi oncologica.",
+  openGraph: {
+    title: "Mediterraneo in Rosa",
+    description: "Il raid in gommone dalle donne per le donne a sostegno dell'Associazione Lorenzo Perrone.",
+    type: "website",
+    locale: "it_IT",
+    siteName: "Mediterraneo in Rosa",
+  },
 }
 
 export const viewport: Viewport = {
@@ -65,9 +71,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NGO",
+    "name": "Mediterraneo in Rosa",
+    "alternateName": "MIR",
+    "description": "Il raid in gommone dalle donne per le donne, a favore di Cuore Rosa e Associazione Lorenzo Perrone per donne con diagnosi oncologica.",
+    "url": "https://www.mediterraneoinrosa.it",
+    "logo": "https://www.mediterraneoinrosa.it/logos/MIR%20logo.png"
+  };
+
   return (
     <html lang="en">
       <body className={`${neueMontreal.variable} font-sans antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
         <Analytics />
       </body>
