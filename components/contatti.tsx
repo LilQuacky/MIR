@@ -3,12 +3,18 @@
 import type React from "react"
 
 import { useEffect, useRef, useState } from "react"
+import { sendContactEmail } from "@/app/actions"
 
 export function Contatti() {
   const [isVisible, setIsVisible] = useState(false)
   const [formState, setFormState] = useState({
     name: "",
     email: "",
+    message: "",
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [status, setStatus] = useState<{ type: "success" | "error" | null; message: string }>({
+    type: null,
     message: "",
   })
   const sectionRef = useRef<HTMLElement>(null)
@@ -30,10 +36,34 @@ export function Contatti() {
     return () => observer.disconnect()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log(formState)
+    setIsSubmitting(true)
+    setStatus({ type: null, message: "" })
+
+    try {
+      const result = await sendContactEmail(formState)
+
+      if (result.success) {
+        setStatus({
+          type: "success",
+          message: "Messaggio inviato con successo! Ti risponderemo al più presto.",
+        })
+        setFormState({ name: "", email: "", message: "" })
+      } else {
+        setStatus({
+          type: "error",
+          message: result.error || "Si è verificato un errore. Riprova più tardi.",
+        })
+      }
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message: "Si è verificato un errore imprevisto. Riprova più tardi.",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -134,18 +164,31 @@ export function Contatti() {
               </div>
               <button
                 type="submit"
-                className="group inline-flex items-center justify-center w-full gap-3 px-8 py-4 bg-pink-text text-white font-medium text-sm tracking-widest uppercase hover:bg-pink-highlight transition-all duration-500"
+                disabled={isSubmitting}
+                className="group inline-flex items-center justify-center w-full gap-3 px-8 py-4 bg-pink-text text-white font-medium text-sm tracking-widest uppercase hover:bg-pink-highlight transition-all duration-500 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Invia Messaggio
-                <svg
-                  className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                {isSubmitting ? "Invio in corso..." : "Invia Messaggio"}
+                {!isSubmitting && (
+                  <svg
+                    className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                )}
               </button>
+              
+              {status.type && (
+                <div
+                  className={`p-4 text-sm rounded-md ${
+                    status.type === "success" ? "bg-green-50 text-green-800 border border-green-200" : "bg-red-50 text-red-800 border border-red-200"
+                  }`}
+                >
+                  {status.message}
+                </div>
+              )}
             </form>
           </div>
         </div>
