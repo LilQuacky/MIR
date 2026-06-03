@@ -82,7 +82,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="it">
       <body className={`${neueMontreal.variable} font-sans antialiased`}>
         <script
           type="application/ld+json"
