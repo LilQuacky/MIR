@@ -33,7 +33,7 @@ export function Ringraziamenti({
       ([entry]) => {
         if (entry.isIntersecting) setIsVisible(true)
       },
-      { threshold: 0.12 },
+      { threshold: 0.05 },
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -41,19 +41,19 @@ export function Ringraziamenti({
   }, [])
 
   return (
-    <section ref={sectionRef} className={`py-16 px-6 lg:px-12 bg-transparent ${className}`}>
+    <section ref={sectionRef} className={`py-16 px-6 lg:px-12 bg-transparent will-change-transform ${className}`}>
       <div className="max-w-7xl mx-auto text-center">
         <p
-          className={`text-xs tracking-[0.3em] uppercase text-pink-text mb-6 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          className={`text-xs tracking-[0.3em] uppercase text-pink-text mb-6 transition-all duration-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 md:translate-y-4"
           }`}
         >
           Ringraziamenti
         </p>
 
         <h2
-          className={`font-serif text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] text-foreground mb-8 text-balance transition-all duration-1000 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          className={`font-serif text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] text-foreground mb-8 text-balance transition-all duration-700 delay-100 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 md:translate-y-6"
           }`}
         >
           Tutto questo non sarebbe possibile
@@ -62,8 +62,8 @@ export function Ringraziamenti({
         </h2>
 
         <p
-          className={`mx-auto max-w-2xl text-lg md:text-xl font-sans text-foreground leading-relaxed transition-all duration-1000 delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          className={`mx-auto max-w-2xl text-lg md:text-xl font-sans text-foreground leading-relaxed transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 md:translate-y-4"
           }`}
         >
           di partner e sostenitori, con il loro prezioso supporto. <span className="font-semibold text-pink-text">Grazie di cuore.</span>
@@ -73,22 +73,24 @@ export function Ringraziamenti({
           {images.map((img, idx) => (
             <div
               key={idx}
-              className={`w-full flex flex-col items-center max-w-5xl mx-auto transition-all duration-1000 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+              className={`w-full flex flex-col items-center max-w-5xl mx-auto transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 md:translate-y-4"
               }`}
-              style={{ transitionDelay: `${80 + idx * 100}ms` }}
+              style={{ transitionDelay: `${50 + idx * 50}ms` }}
             >
               <div className="text-xs uppercase tracking-[0.3em] text-pink-text mb-2">
                 {img.label}
               </div>
               <div className="w-full flex items-center justify-center">
-                <div className="w-full h-28 md:h-36 lg:h-44 flex items-center justify-center">
+                {}
+                <div className="relative w-full h-28 md:h-36 lg:h-44 flex items-center justify-center">
                   <Image
                     src={img.src}
                     alt={img.alt}
-                    width={2000}
-                    height={600}
-                    className="h-full w-full object-contain"
+                    fill
+                    sizes="(max-w-7xl) 100vw, 1200px"
+                    className="object-contain"
+                    priority={idx === 0}
                   />
                 </div>
               </div>
