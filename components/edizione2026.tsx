@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image, { type StaticImageData } from "next/image"
+import Link from "next/link"
 import logo2026 from "@/public/mir/2026/Logo MIR venti26.png"
 import boxPartenza from "@/public/mir/2026/box-partenza.png"
 import boxTappe from "@/public/mir/2026/box-tappe.png"
@@ -351,12 +352,12 @@ export function Edizione2026() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 },
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+          }
+        },
+        { threshold: 0.1 },
     )
 
     if (sectionRef.current) {
@@ -366,91 +367,107 @@ export function Edizione2026() {
     return () => observer.disconnect()
   }, [])
 
-  // vertical layout: no horizontal drag handlers needed
-
   return (
-    <section ref={sectionRef} id="edizione-2026" className="py-32 lg:py-40 px-6 lg:px-12 bg-sand/50">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-20 flex flex-col items-center">
-          <div
-            className={`mb-8 transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`}
-            style={{ transitionDelay: `120ms` }}
-          >
-            <Image
-              src={logo2026}
-              alt="Logo MIR 2026"
-              className="h-auto w-[500px] md:w-[700px] lg:w-[800px]"
-              priority
-            />
-          </div>
-          <p
-            className={`text-xs tracking-[0.3em] uppercase text-pink-text mb-6 transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            L'Edizione 2026
-          </p>
-          <h2
-            className={`font-serif text-4xl md:text-5xl lg:text-6xl font-light text-foreground text-balance transition-all duration-1000 delay-200 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            Il Giro d'Italia in Rosa
-          </h2>
-        </div>
-
-        <div className="space-y-14">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
-            {services.filter((service) => service.variant !== "stages").map((service, index) => (
-              <div
-                key={service.title}
-                className={`group w-full overflow-hidden rounded-[2rem] border border-border/60 bg-background shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] p-5 lg:p-6 ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      <section ref={sectionRef} id="edizione-2026" className="py-32 lg:py-40 px-6 lg:px-12 bg-sand/50">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-20 flex flex-col items-center">
+            <div
+                className={`mb-8 transition-all duration-1000 ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
-                style={{ transitionDelay: `${300 + index * 120}ms` }}
-              >
-                <div className="flex flex-col items-center text-center">
-                  <h3 className="text-center font-serif text-2xl text-foreground mb-3">
-                    {service.title}
-                  </h3>
-                  <div className="my-3 flex h-10 items-center justify-center text-pink-text">
-                    {service.icon}
-                  </div>
-                  <div className="mb-4 w-full overflow-hidden rounded-2xl border border-border/50 bg-sand/30 shadow-sm">
-                    <Image
-                      src={service.image}
-                      alt={service.imageAlt}
-                      className="h-56 w-full object-cover md:h-60"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
-                  <div className="w-full max-w-prose text-left text-muted-foreground leading-relaxed font-sans text-sm md:text-base">
-                    <div className="space-y-4">{service.description}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-
+                style={{ transitionDelay: `120ms` }}
+            >
+              <Image
+                  src={logo2026}
+                  alt="Logo MIR 2026"
+                  className="h-auto w-[500px] md:w-[700px] lg:w-[800px]"
+                  priority
+              />
+            </div>
+            <p
+                className={`text-xs tracking-[0.3em] uppercase text-pink-text mb-6 transition-all duration-1000 ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                }`}
+            >
+              L'Edizione 2026
+            </p>
+            <h2
+                className={`font-serif text-4xl md:text-5xl lg:text-6xl font-light text-foreground text-balance transition-all duration-1000 delay-200 ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+            >
+              Il Giro d'Italia in Rosa
+            </h2>
           </div>
 
-          <div className="rounded-[2rem] border border-border/60 bg-background/90 p-5 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:p-8">
-            <div className="mb-6 flex flex-col gap-3 border-b border-border/60 pb-5 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-pink-text">Edizione 2026</p>
-                <h3 className="mt-2 font-serif text-3xl text-foreground md:text-4xl">Itinerario a tappe</h3>
-              </div>
-              <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
-                Tocca un punto della mappa per vedere il tratto, le miglia nautiche del segmento e il totale accumulato.
-              </p>
+          <div className="space-y-14">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+              {services.filter((service) => service.variant !== "stages").map((service, index) => (
+                  <div
+                      key={service.title}
+                      className={`group w-full overflow-hidden rounded-[2rem] border border-border/60 bg-background shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] p-5 lg:p-6 ${
+                          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                      }`}
+                      style={{ transitionDelay: `${300 + index * 120}ms` }}
+                  >
+                    <div className="flex flex-col items-center text-center">
+                      <h3 className="text-center font-serif text-2xl text-foreground mb-3">
+                        {service.title}
+                      </h3>
+                      <div className="my-3 flex h-10 items-center justify-center text-pink-text">
+                        {service.icon}
+                      </div>
+                      <div className="mb-4 w-full overflow-hidden rounded-2xl border border-border/50 bg-sand/30 shadow-sm">
+                        <Image
+                            src={service.image}
+                            alt={service.imageAlt}
+                            className="h-56 w-full object-cover md:h-60"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      </div>
+                      <div className="w-full max-w-prose text-left text-muted-foreground leading-relaxed font-sans text-sm md:text-base">
+                        <div className="space-y-4">{service.description}</div>
+                      </div>
+                    </div>
+                  </div>
+              ))}
             </div>
 
-            <TappeInteractiveMap />
+            <div className="rounded-[2rem] border border-border/60 bg-background/90 p-5 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:p-8">
+              <div className="mb-6 flex flex-col gap-4 border-b border-border/60 pb-5 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-pink-text">Edizione 2026</p>
+                  <h3 className="mt-2 font-serif text-3xl text-foreground md:text-4xl">Itinerario a tappe</h3>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                    Tocca un punto della mappa per vedere il tratto, le miglia nautiche del segmento e il totale accumulato.
+                  </p>
+                </div>
+
+                {}
+                <div className="shrink-0 pt-2 lg:pt-0">
+                  <Link
+                      href="https://asn2.eu/RAIDROSA/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2.5 rounded-full border border-pink-highlight/30 bg-pink-highlight/10 px-5 py-3 text-sm font-medium tracking-wide text-pink-text shadow-sm transition-all duration-300 hover:bg-pink-highlight hover:text-white hover:shadow-[0_8px_20px_rgba(236,72,153,0.15)] group/btn"
+                  >
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-highlight opacity-75 group-hover/btn:bg-white" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-highlight group-hover/btn:bg-white" />
+                  </span>
+                    Monitora il raid in tempo reale
+                    <svg className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+
+              <TappeInteractiveMap />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
   )
 }
